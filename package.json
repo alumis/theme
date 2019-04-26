@@ -1,7 +1,7 @@
 {
   "name": "@alumis/theme",
   "description": "The least popular front-end framework for developing responsive, mobile first projects on the web.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "sass": "scss/bootstrap.scss",
   "repository": {
     "type": "git",
