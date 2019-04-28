@@ -129,8 +129,12 @@ address {
 ol,
 ul,
 dl {
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+li {
+  display: block;
 }
 
 ol ol,
