@@ -36,7 +36,9 @@
   }
 
   &:not(:disabled):not(.disabled):active,
-  &:not(:disabled):not(.disabled).active {
+  &:not(:disabled):not(.disabled).active,
+  &:not(:disabled):not(.disabled)[aria-pressed]
+   {
     @include box-shadow($btn-active-box-shadow);
 
     &:focus {
