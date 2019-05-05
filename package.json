@@ -1,7 +1,7 @@
 {
   "name": "@alumis/theme",
   "description": "Fork of Bootstrap",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "sass": "scss/alumis.scss",
   "repository": {
     "type": "git",
@@ -11,7 +11,9 @@
     "url": "https://github.com/alumis/theme/issues"
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@alumis/observables": "^1.0.48"
+  },
   "devDependencies": {
     "node-sass": "^4.11.0"
   },
