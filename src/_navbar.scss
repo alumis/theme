@@ -1,0 +1,28 @@
+@import "../scss/functions";
+@import "../scss/variables";
+@import "../scss/mixins";
+@import "../scss/navbar";
+
+// Base Hamburger (We need this)
+// ==================================================
+@import "../scss/hamburgers/base";
+
+// Hamburger types
+// ==================================================
+@import "../scss/hamburgers/types/squeeze";
+
+// ==================================================
+// Cooking up additional types:
+//
+// The Sass for each hamburger type should be nested
+// inside an @if directive to check whether or not
+// it exists in $hamburger-types so only the CSS for
+// included types are generated.
+//
+// e.g. hamburgers/types/_new-type.scss
+//
+// @if index($hamburger-types, new-type) {
+//   .hamburger--new-type {
+//     ...
+//   }
+// }
