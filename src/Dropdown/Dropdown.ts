@@ -130,7 +130,7 @@ export class Dropdown extends Component<HTMLDivElement> {
 
 export class DropdownItem extends Component<HTMLDivElement> {
 
-    constructor(attrs: IAttributes, children: any[], cssClasses: IDropdownItemCssClasses) {
+    constructor(attrs: IAttributes, children: any[]) {
 
         super();
 

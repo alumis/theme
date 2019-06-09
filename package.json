@@ -1,7 +1,7 @@
 {
   "name": "@alumis/theme",
   "description": "Fork of Bootstrap",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "sass": "scss/alumis.scss",
   "repository": {
     "type": "git",
