@@ -5,7 +5,7 @@ import { observe } from '@alumis/utils';
 import { IButtonAttributes } from '../Button/Button';
 import { globalAttrHandlers, generateHTMLElementId } from '@alumis/observables-dom';
 import { OperationCancelledError } from '@alumis/cancellationtoken';
-import { transitionAsync, easeIn } from '@alumis/transitionasync';
+import { transitionAsync, easeIn, IDOMAnimator } from '@alumis/transitionasync';
 import * as cssClasses from "./_dropdown.scss";
 
 export class Dropdown extends Component<HTMLDivElement> {
@@ -32,7 +32,7 @@ export class Dropdown extends Component<HTMLDivElement> {
         this.node.addEventListener('click', this.clickEventHandler);
         this.node.classList.add(cssClasses["dropdown-menu"]);
 
-        this.placement = placement || DropdownPlacement.bottom;
+        this.placement = placement || DropdownPlacement.bottomStart;
         this.animator = animator;
     }
 
@@ -124,7 +124,9 @@ export class Dropdown extends Component<HTMLDivElement> {
 
     private clickEventHandler(event: Event) {
 
-        event.stopPropagation();
+        if (event.target === this.node) {
+            event.stopPropagation();
+        }
     }
 }
 
@@ -145,7 +147,7 @@ export interface IDropdownItemCssClasses {
 }
 
 export class DropdownEaseInFadeAnimator implements IDropdownAnimator {
-    
+
     constructor(public duration: number = 150) {}
 
     async showAsync(node: HTMLElement, cancellationToken: CancellationToken): Promise<void> {
@@ -179,9 +181,22 @@ export class DropdownEaseInFadeAnimator implements IDropdownAnimator {
 
         }, cancellationToken);
     }
+
+    insertBeforeAsync(parentElement: HTMLElement, newChild: HTMLElement, referenceNode: Node, cancellationToken?: CancellationToken): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
+    removeAsync(element: HTMLElement, cancellationToken?: CancellationToken): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
+    replaceAsync(newChild: HTMLElement, oldChild: HTMLElement, cancellationToken?: CancellationToken, replaced?: () => any): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
+    resumeAsync(element: HTMLElement, cancellationToken?: CancellationToken): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
 }
 
-export interface IDropdownAnimator {
+export interface IDropdownAnimator extends IDOMAnimator {
 
     showAsync(node: HTMLDivElement, cancellationToken: CancellationToken): Promise<void>;
     hideAsync(node: HTMLDivElement, cancellationToken: CancellationToken): Promise<void>;
@@ -189,13 +204,7 @@ export interface IDropdownAnimator {
 
 export function bindDropdown(toggleElement: HTMLElement, dropdownMenu: Dropdown, attrs: IButtonAttributes) {
 
-    let dropdownCloseOnClickOutside: boolean;
-
-    if (attrs) {
-        
-        dropdownCloseOnClickOutside = attrs.dropdowncloseonclickoutside;
-        delete attrs.dropdowncloseonclickoutside;
-    }
+    delete attrs.dropdown;
 
     toggleElement.setAttribute('aria-haspopup', 'true');
     toggleElement.setAttribute('aria-expanded', 'false');    
@@ -203,17 +212,13 @@ export function bindDropdown(toggleElement: HTMLElement, dropdownMenu: Dropdown,
 
     dropdownMenu.node.setAttribute('aria-labelledby', toggleElement.id || (toggleElement.id = generateHTMLElementId()));
 
-    if (dropdownCloseOnClickOutside) {
+    if (!isClickedOutsideEventHandlerAttached) {
 
-        if (!isClickedOutsideEventHandlerAttached) {
-
-            document.body.addEventListener('click', clickedOutsideEventHandler);
-
-            isClickedOutsideEventHandlerAttached = true;
-        }
-
-        dropdownsToCloseOnClickOutsideSet.add(dropdownMenu);
+        document.body.addEventListener('click', clickedOutsideEventHandler);
+        isClickedOutsideEventHandlerAttached = true;
     }
+
+    dropdownsToCloseOnClickOutsideSet.add(dropdownMenu);    
 
     dropdownMenu.toggleElement = toggleElement;
 }
@@ -225,8 +230,11 @@ function clickedOutsideEventHandler(event: Event) {
 
     for (let dropdown of dropdownsToCloseOnClickOutsideSet) {
 
-        dropdown.hideAsync();
-        dropdown.toggleElement.setAttribute('aria-expanded', 'false');
+        if (dropdown.isVisible) {
+
+            dropdown.hideAsync();
+            dropdown.toggleElement.setAttribute('aria-expanded', 'false');
+        }
     }
 }
 
@@ -280,16 +288,7 @@ export interface IDropdownAttributes extends IAttributes {
 declare module '@alumis/observables-dom' {
 
     export interface IAttributes {
-
         dropdown?: Dropdown;
-    }
-}
-
-declare module '../Button/Button' {
-
-    export interface IButtonAttributes {
-
-        dropdowncloseonclickoutside?: boolean;
     }
 }
 
