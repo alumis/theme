@@ -67,3 +67,13 @@ export class HamburgerButton extends Component<HTMLButtonElement> {
         this.node.appendChild(hamburgerBox);
     }
 }
+
+globalAttrHandlers.set("navbar-brand", (element: HTMLElement) => {
+
+    element.classList.add((cssClasses as any)["navbar-brand"]);
+});
+
+globalAttrHandlers.set("navbar-brand-text", (element: HTMLElement) => {
+
+    element.classList.add((cssClasses as any)["navbar-brand-text"]);
+});

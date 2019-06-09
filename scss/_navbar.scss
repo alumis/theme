@@ -37,6 +37,26 @@
     justify-content: space-between;
 }
 
+.navbar-brand {
+    display: inline-block;
+    // padding-top: $navbar-brand-padding-y;
+    // padding-bottom: $navbar-brand-padding-y;
+    margin-right: $navbar-padding-x;
+    @include font-size($navbar-brand-font-size);
+    line-height: inherit;
+    white-space: nowrap;
+
+    @include hover-focus {
+        text-decoration: none;
+    }
+}
+
+.navbar-brand-text {
+
+    margin-left: $navbar-brand-text-margin;
+    vertical-align: middle;
+}
+
 // Hamburger
 // ==================================================
 .hamburger {
@@ -166,25 +186,6 @@
         }
     }
 }
-
-
-// // Navbar brand
-// //
-// // Used for brand, project, or site names.
-
-// .navbar-brand {
-//     display: inline-block;
-//     padding-top: $navbar-brand-padding-y;
-//     padding-bottom: $navbar-brand-padding-y;
-//     margin-right: $navbar-padding-x;
-//     @include font-size($navbar-brand-font-size);
-//     line-height: inherit;
-//     white-space: nowrap;
-
-//     @include hover-focus {
-//         text-decoration: none;
-//     }
-// }
 
 
 // // Navbar nav
