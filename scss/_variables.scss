@@ -44,15 +44,15 @@ $grays: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $grays: map-merge(
   (
-    "100": $gray-100,
-    "200": $gray-200,
-    "300": $gray-300,
-    "400": $gray-400,
-    "500": $gray-500,
-    "600": $gray-600,
-    "700": $gray-700,
-    "800": $gray-800,
-    "900": $gray-900
+    "100": $N10,
+    "200": $N40,
+    "300": $N60,
+    "400": $N80,
+    "500": $N100,
+    "600": $N300,
+    "700": $N500,
+    "800": $N700,
+    "900": $N900
   ),
   $grays
 );
@@ -64,6 +64,15 @@ $R200: #FF7452;
 $R300: #FF5630;
 $R400: #DE350B;
 $R500: #BF2600;
+
+// Yellows
+$Y50: #FFFAE6;
+$Y75: #FFF0B3;
+$Y100: #FFE380;
+$Y200: #FFC400;
+$Y300: #FFAB00;
+$Y400: #FF991F;
+$Y500: #FF8B00;
 
 // Greens
 $G50: #E3FCEF;
@@ -89,7 +98,7 @@ $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
 $red:     #dc3545 !default;
 $orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
+$yellow:  $Y200 !default;
 $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
@@ -497,7 +506,7 @@ $btn-transition:              color .15s ease-in-out, background-color .15s ease
 
 // Forms
 
-$label-margin-bottom:                   .5rem !default;
+$label-margin-bottom:                   .25rem !default;
 
 $input-padding-y:                       .5rem !default;
 $input-padding-x:                       .375rem !default;
@@ -763,7 +772,7 @@ $nav-divider-margin-y:              $spacer / 2 !default;
 // Navbar
 
 $navbar-padding-y:                  $spacer / 2 !default;
-$navbar-padding-x:                  $spacer !default;
+$navbar-padding-x:                  .5625rem !default;
 
 $navbar-nav-link-padding-x:         .5rem !default;
 
@@ -772,6 +781,8 @@ $navbar-brand-font-size:            $font-size-lg !default;
 $nav-link-height:                   $font-size-base * $line-height-base + $nav-link-padding-y * 2 !default;
 $navbar-brand-height:               $navbar-brand-font-size * $line-height-base !default;
 $navbar-brand-padding-y:            ($nav-link-height - $navbar-brand-height) / 2 !default;
+
+$navbar-brand-text-margin:          .125rem !default;
 
 $navbar-toggler-padding-y:          .25rem !default;
 $navbar-toggler-padding-x:          .75rem !default;
@@ -796,6 +807,35 @@ $navbar-light-brand-color:                $navbar-light-active-color !default;
 $navbar-light-brand-hover-color:          $navbar-light-active-color !default;
 $navbar-dark-brand-color:                 $navbar-dark-active-color !default;
 $navbar-dark-brand-hover-color:           $navbar-dark-active-color !default;
+
+
+/*!
+ * Hamburgers
+ * @description Tasty CSS-animated hamburgers
+ * @author Jonathan Suh @jonsuh
+ * @site https://jonsuh.com/hamburgers
+ * @link https://github.com/jonsuh/hamburgers
+ */
+
+// Settings
+// ==================================================
+$hamburger-padding-x           : 10px !default;
+$hamburger-padding-y           : 10px !default;
+$hamburger-layer-width         : 30px !default;
+$hamburger-layer-height        : 3px !default;
+$hamburger-layer-spacing       : 5px !default;
+$hamburger-layer-color         : #000 !default;
+$hamburger-layer-border-radius : 3px !default;
+$hamburger-hover-opacity       : 0.7 !default;
+$hamburger-active-layer-color  : $hamburger-layer-color !default;
+$hamburger-active-hover-opacity: $hamburger-hover-opacity !default;
+
+// To use CSS filters as the hover effect instead of opacity,
+// set $hamburger-hover-use-filter as true and
+// change the value of $hamburger-hover-filter accordingly.
+$hamburger-hover-use-filter   : false !default;
+$hamburger-hover-filter       : opacity(50%) !default;
+$hamburger-active-hover-filter: $hamburger-hover-filter !default;
 
 
 // Dropdowns
@@ -1015,7 +1055,6 @@ $modal-transition:                  transform .3s ease-out !default;
 
 $alert-padding-y:                   .75rem !default;
 $alert-padding-x:                   1.25rem !default;
-$alert-margin-bottom:               1rem !default;
 $alert-border-radius:               $border-radius !default;
 $alert-link-font-weight:            $font-weight-bold !default;
 $alert-border-width:                $border-width !default;

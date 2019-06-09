@@ -1,8 +1,7 @@
 {
   "name": "@alumis/theme",
-
   "description": "Fork of Bootstrap",
-  "version": "1.0.6",
+  "version": "1.0.22",
   "sass": "scss/alumis.scss",
   "repository": {
     "type": "git",
@@ -12,14 +11,26 @@
     "url": "https://github.com/alumis/theme/issues"
   },
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
-    "node-sass": "^4.11.0"
+    "@alumis/observables": "^1.0.48",
+    "@alumis/observables-dom": "^1.0.67",
+    "@alumis/observables-i18n": "^1.0.16",
+    "node-sass": "^4.11.0",
+    "@alumis/cancellationtoken": "^1.0.4",
+    "@alumis/semaphore": "^1.0.1",
+    "@alumis/utils": "^1.0.7",
+    "@alumis/transitionasync": "^1.0.7",
+    "popper.js": "^1.15.0"
   },
-  "engines": {
-    "node": ">=8"
-  },
-  "files": [
-    "scss/**/*.scss"
-  ]
+  "peerDependencies": {
+    "@alumis/observables": "^1.0.48",
+    "@alumis/observables-dom": "^1.0.67",
+    "@alumis/observables-i18n": "^1.0.16",
+    "node-sass": "^4.11.0",
+    "@alumis/cancellationtoken": "^1.0.4",
+    "@alumis/semaphore": "^1.0.1",
+    "@alumis/utils": "^1.0.7",
+    "@alumis/transitionasync": "^1.0.7",
+    "popper.js": "^1.15.0"
+  }
 }
