@@ -128,13 +128,13 @@ export class Dropdown extends Component<HTMLDivElement> {
     }
 }
 
-export class DropdownItem<TElement extends HTMLElement> extends Component<TElement> {
+export class DropdownItem extends Component<HTMLDivElement> {
 
-    constructor(tagName: string, attrs: IAttributes, children: any[], cssClasses: IDropdownItemCssClasses) {
+    constructor(attrs: IAttributes, children: any[], cssClasses: IDropdownItemCssClasses) {
 
         super();
 
-        this.node = createNode(tagName, attrs, children);
+        this.node = createNode('div', attrs, children);
         this.node.classList.add(cssClasses["dropdown-item"]);
     }
 }
