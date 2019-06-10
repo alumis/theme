@@ -1,6 +1,5 @@
 import { Observable, ComputedObservable } from "@alumis/observables";
 import { Component, IAttributes, createNode, appendDispose } from "@alumis/observables-dom";
-import * as cssClasses from "./_button.scss";
 
 export class Button extends Component<HTMLButtonElement> {
 
@@ -26,7 +25,7 @@ export class Button extends Component<HTMLButtonElement> {
 
         (this.node = <HTMLButtonElement>createNode("button", attrs, children)).type = submits ? "submit" : "button";
 
-        this.node.classList.add((cssClasses as any as IButtonCssClasses).btn);
+        this.node.classList.add(Button.styles.btn);
 
         if (theme instanceof Observable) {
 
@@ -57,14 +56,14 @@ export class Button extends Component<HTMLButtonElement> {
         if (size) {
 
             if (size === ButtonSize.Small)
-                this.node.classList.add((cssClasses as any as IButtonCssClasses)["btn-sm"]);
+                this.node.classList.add(Button.styles["btn-sm"]);
 
             else if (size === ButtonSize.Large)
-                this.node.classList.add((cssClasses as any as IButtonCssClasses)["btn-lg"]);
+                this.node.classList.add(Button.styles["btn-lg"]);
         }
 
         if (fullWidth)
-            this.node.classList.add((cssClasses as any as IButtonCssClasses)["btn-block"]);
+            this.node.classList.add(Button.styles["btn-block"]);
     }
 
     themeAsObservable: Observable<ButtonTheme>;
@@ -75,29 +74,29 @@ export class Button extends Component<HTMLButtonElement> {
         switch (color) {
 
             case ButtonTheme.Primary:
-                return (cssClasses as any as IButtonCssClasses)["btn-primary"];
+                return Button.styles["btn-primary"];
             case ButtonTheme.PrimaryOutlined:
-                return (cssClasses as any as IButtonCssClasses)["btn-outline-primary"];
+                return Button.styles["btn-outline-primary"];
             case ButtonTheme.Secondary:
-                return (cssClasses as any as IButtonCssClasses)["btn-secondary"];
+                return Button.styles["btn-secondary"];
             case ButtonTheme.SecondaryOutlined:
-                return (cssClasses as any as IButtonCssClasses)["btn-outline-secondary"];
+                return Button.styles["btn-outline-secondary"];
             case ButtonTheme.Success:
-                return (cssClasses as any as IButtonCssClasses)["btn-success"];
+                return Button.styles["btn-success"];
             case ButtonTheme.SuccessOutlined:
-                return (cssClasses as any as IButtonCssClasses)["btn-outline-success"];
+                return Button.styles["btn-outline-success"];
             case ButtonTheme.Warning:
-                return (cssClasses as any as IButtonCssClasses)["btn-warning"];
+                return Button.styles["btn-warning"];
             case ButtonTheme.WarningOutlined:
-                return (cssClasses as any as IButtonCssClasses)["btn-outline-warning"];
+                return Button.styles["btn-outline-warning"];
             case ButtonTheme.Danger:
-                return (cssClasses as any as IButtonCssClasses)["btn-danger"];
+                return Button.styles["btn-danger"];
             case ButtonTheme.DangerOutlined:
-                return (cssClasses as any as IButtonCssClasses)["btn-outline-danger"];
+                return Button.styles["btn-outline-danger"];
             case ButtonTheme.Info:
-                return (cssClasses as any as IButtonCssClasses)["btn-info"];
+                return Button.styles["btn-info"];
             case ButtonTheme.InfoOutlined:
-                return (cssClasses as any as IButtonCssClasses)["btn-outline-info"];
+                return Button.styles["btn-outline-info"];
         }
     }
 
@@ -111,9 +110,11 @@ export class Button extends Component<HTMLButtonElement> {
         if (cls = Button.getColorClass(oldColor))
             this.node.classList.remove(cls);
     };
+
+    static styles: IButtonStyles;
 }
 
-export interface IButtonCssClasses {
+export interface IButtonStyles {
 
     "btn": string;
     "btn-primary": string;

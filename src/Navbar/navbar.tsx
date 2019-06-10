@@ -1,5 +1,11 @@
 import { globalAttrHandlers, Component, IAttributes } from "@alumis/observables-dom";
-import * as cssClasses from "./_navbar.scss";
+
+let navbarStyles: INavbarStyles;
+
+export function setStyles(styles: INavbarStyles) {
+
+    navbarStyles = styles;
+}
 
 declare module '@alumis/observables-dom' {
 
@@ -14,39 +20,20 @@ declare module '@alumis/observables-dom' {
 globalAttrHandlers.set("navbar", (element: HTMLElement, attr: boolean) => {
 
     if (attr)
-        element.classList.add((cssClasses as any).navbar);
+        element.classList.add(navbarStyles.navbar);
 });
 
 globalAttrHandlers.set("navbar-sticky", (element: HTMLElement, attr: boolean) => {
 
     if (attr)
-        element.classList.add((cssClasses as any)["navbar-sticky"]);
+        element.classList.add(navbarStyles["navbar-sticky"]);
 });
 
 globalAttrHandlers.set("navbar-groups", (element: HTMLElement, attr: boolean) => {
 
     if (attr)
-        element.classList.add((cssClasses as any)["navbar-groups"]);
+        element.classList.add(navbarStyles["navbar-groups"]);
 });
-
-export class NavbarProgress extends Component<HTMLProgressElement> {
-
-    constructor() {
-
-        super();
-
-        this.node =
-
-        <progress id="navbar-progress" type="indeterminate">
-            <div class="devsite-progress--indeterminate">
-                <div class="devsite-progress--indeterminate-1"></div>
-                <div class="devsite-progress--indeterminate-2"></div>
-                <div class="devsite-progress--indeterminate-3"></div>
-                <div class="devsite-progress--indeterminate-4"></div>
-            </div>
-        </progress>;
-    }
-}
 
 export class HamburgerButton extends Component<HTMLButtonElement> {
 
@@ -54,15 +41,15 @@ export class HamburgerButton extends Component<HTMLButtonElement> {
 
         super();
 
-        (this.node = document.createElement("button")).classList.add((cssClasses as any).hamburger);
+        (this.node = document.createElement("button")).classList.add(navbarStyles.hamburger);
 
         let hamburgerBox = document.createElement("span");
 
-        hamburgerBox.classList.add((cssClasses as any)["hamburger-box"]);
+        hamburgerBox.classList.add(navbarStyles["hamburger-box"]);
 
         let hamburgerInner = document.createElement("span");
 
-        hamburgerInner.classList.add((cssClasses as any)["hamburger-inner"]);
+        hamburgerInner.classList.add(navbarStyles["hamburger-inner"]);
         hamburgerBox.appendChild(hamburgerInner);
         this.node.appendChild(hamburgerBox);
     }
@@ -70,10 +57,22 @@ export class HamburgerButton extends Component<HTMLButtonElement> {
 
 globalAttrHandlers.set("navbar-brand", (element: HTMLElement) => {
 
-    element.classList.add((cssClasses as any)["navbar-brand"]);
+    element.classList.add(navbarStyles["navbar-brand"]);
 });
 
 globalAttrHandlers.set("navbar-brand-text", (element: HTMLElement) => {
 
-    element.classList.add((cssClasses as any)["navbar-brand-text"]);
+    element.classList.add(navbarStyles["navbar-brand-text"]);
 });
+
+export interface INavbarStyles {
+
+    "navbar": string;
+    "navbar-sticky": string;
+    "navbar-groups": string;
+    "navbar-brand": string;
+    "navbar-brand-text": string;
+    "hamburger": string;
+    "hamburger-box": string;
+    "hamburger-inner": string;
+}

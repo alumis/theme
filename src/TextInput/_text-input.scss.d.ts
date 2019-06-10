@@ -1,2 +1,5 @@
-declare const cssClasses;
-export default cssClasses;
+import { ITextInputStyles } from "./TextInput";
+
+declare const styles: ITextInputStyles;
+
+export default styles;

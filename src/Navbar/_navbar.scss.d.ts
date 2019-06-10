@@ -1,2 +1,5 @@
-declare const cssClasses;
-export default cssClasses;
+import { INavbarStyles } from "./navbar";
+
+declare const styles: INavbarStyles;
+
+export default styles;

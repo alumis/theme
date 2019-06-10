@@ -1,6 +1,5 @@
 import { Observable, ComputedObservable } from "@alumis/observables";
 import { createNode, Component, IAttributes, generateHTMLElementId, appendDispose, bindClass } from "@alumis/observables-dom";
-import * as cssClasses from "./_text-input.scss";
 
 export class TextInput extends Component<HTMLDivElement> {
 
@@ -72,7 +71,7 @@ export class TextInput extends Component<HTMLDivElement> {
             }
         }
 
-        this.inputElement.classList.add(cssClasses["form-control"]);
+        this.inputElement.classList.add(TextInput.styles["form-control"]);
 
         if (value instanceof ComputedObservable) {
 
@@ -117,7 +116,7 @@ export class TextInput extends Component<HTMLDivElement> {
                 this.inputElement.name = type;
         }
 
-        (this.node = document.createElement("div")).classList.add(cssClasses["form-group"]);
+        (this.node = document.createElement("div")).classList.add(TextInput.styles["form-group"]);
 
         if (label) {
 
@@ -133,7 +132,7 @@ export class TextInput extends Component<HTMLDivElement> {
 
             (this.helpElement = <HTMLElement>createNode("small", null, help)).id = ariaDescribedBy = generateHTMLElementId();
 
-            this.helpElement.classList.add(cssClasses["form-text"], cssClasses["text-muted"]);
+            this.helpElement.classList.add(TextInput.styles["form-text"], TextInput.styles["text-muted"]);
             this.node.appendChild(this.helpElement);
         }
 
@@ -142,7 +141,7 @@ export class TextInput extends Component<HTMLDivElement> {
 
         else appendDispose(this.inputElement, (this.invalidFeedback = Observable.create(null)).dispose);
 
-        bindClass(this.inputElement, cssClasses["is-invalid"], () => !!this.invalidFeedback.value);
+        bindClass(this.inputElement, TextInput.styles["is-invalid"], () => !!this.invalidFeedback.value);
 
         this.invalidFeedbackElement = <HTMLDivElement>createNode("div", null, () => {
 
@@ -167,7 +166,7 @@ export class TextInput extends Component<HTMLDivElement> {
 
         else ariaDescribedBy = this.invalidFeedbackElement.id;
 
-        this.invalidFeedbackElement.classList.add(cssClasses["invalid-feedback"]);
+        this.invalidFeedbackElement.classList.add(TextInput.styles["invalid-feedback"]);
         this.node.appendChild(this.invalidFeedbackElement);
 
         if (ariaDescribedBy)
@@ -182,16 +181,8 @@ export class TextInput extends Component<HTMLDivElement> {
     invalidFeedbackElement: HTMLElement;
     valueAsObservable: Observable<string>;
     invalidFeedback: Observable<string | Observable<string> | (() => string)>;
-}
 
-export interface ITextInputCssClasses {
-
-    "form-group": string;
-    "form-control": string;
-    "form-text": string;
-    "text-muted": string;
-    "is-invalid": string;
-    "invalid-feedback": string;
+    static styles: ITextInputStyles;
 }
 
 export interface ITextInputAttributes extends IAttributes {
@@ -238,4 +229,14 @@ export enum TextInputType {
     PhoneNumberWithoutAreaCode = "tel-local",
     PhoneNumberExtension = "tel-extension",
     Url = "url"
+}
+
+export interface ITextInputStyles {
+
+    "form-group": string;
+    "form-control": string;
+    "form-text": string;
+    "text-muted": string;
+    "is-invalid": string;
+    "invalid-feedback": string;
 }

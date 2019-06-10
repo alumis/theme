@@ -6,7 +6,6 @@ import { IButtonAttributes } from '../Button/Button';
 import { globalAttrHandlers, generateHTMLElementId } from '@alumis/observables-dom';
 import { OperationCancelledError } from '@alumis/cancellationtoken';
 import { transitionAsync, easeIn, IDOMAnimator } from '@alumis/transitionasync';
-import * as cssClasses from "./_dropdown.scss";
 
 export class Dropdown extends Component<HTMLDivElement> {
 
@@ -30,7 +29,7 @@ export class Dropdown extends Component<HTMLDivElement> {
 
         this.node = createNode('div', attrs, children);
         this.node.addEventListener('click', this.clickEventHandler);
-        this.node.classList.add(cssClasses["dropdown-menu"]);
+        this.node.classList.add(Dropdown.styles["dropdown-menu"]);
 
         this.placement = placement || DropdownPlacement.BottomStart;
         this.animator = animator;
@@ -128,6 +127,8 @@ export class Dropdown extends Component<HTMLDivElement> {
             event.stopPropagation();
         }
     }
+
+    static styles: IDropdownStyles;
 }
 
 export class DropdownItem extends Component<HTMLDivElement> {
@@ -137,7 +138,7 @@ export class DropdownItem extends Component<HTMLDivElement> {
         super();
 
         this.node = createNode('div', attrs, children);
-        this.node.classList.add(cssClasses["dropdown-item"]);
+        this.node.classList.add(Dropdown.styles["dropdown-item"]);
     }
 }
 
@@ -298,11 +299,6 @@ export interface IDropdownAttributes extends IAttributes {
     animator?: IDropdownAnimator;
 }
 
-export interface IDropdownCssClasses {
-
-    'dropdown-menu': string;
-}
-
 export enum DropdownPlacement {
 
     AutoStart = 'auto-start',
@@ -320,4 +316,10 @@ export enum DropdownPlacement {
     LeftStart = 'left-start',
     LeftEnd = 'left-end',
     Left = 'left',
+}
+
+export interface IDropdownStyles {
+
+    'dropdown-menu': string;
+    "dropdown-item": string;
 }
