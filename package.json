@@ -1,7 +1,7 @@
 {
   "name": "@alumis/theme",
   "description": "Fork of Bootstrap",
-  "version": "1.0.30",
+  "version": "1.0.32",
   "sass": "scss/alumis.scss",
   "repository": {
     "type": "git",
@@ -12,14 +12,14 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@alumis/cancellationtoken": "^1.0.4",
     "@alumis/observables": "^1.0.48",
     "@alumis/observables-dom": "^1.0.67",
     "@alumis/observables-i18n": "^1.0.16",
-    "node-sass": "^4.11.0",
-    "@alumis/cancellationtoken": "^1.0.4",
     "@alumis/semaphore": "^1.0.1",
-    "@alumis/utils": "^1.0.7",
     "@alumis/transitionasync": "^1.0.7",
+    "@alumis/utils": "^1.0.8",
+    "node-sass": "^4.11.0",
     "popper.js": "^1.15.0"
   },
   "peerDependencies": {
