@@ -32,7 +32,7 @@ export class Dropdown extends Component<HTMLDivElement> {
         this.node.addEventListener('click', this.clickEventHandler);
         this.node.classList.add(cssClasses["dropdown-menu"]);
 
-        this.placement = placement || DropdownPlacement.bottomStart;
+        this.placement = placement || DropdownPlacement.BottomStart;
         this.animator = animator;
     }
 
@@ -214,7 +214,7 @@ export function bindDropdown(toggleElement: HTMLElement, dropdownMenu: Dropdown,
 
     if (!isClickedOutsideEventHandlerAttached) {
 
-        document.body.addEventListener('click', clickedOutsideEventHandler);
+        document.addEventListener('click', clickedOutsideEventHandler);
         isClickedOutsideEventHandlerAttached = true;
     }
 
@@ -305,19 +305,19 @@ export interface IDropdownCssClasses {
 
 export enum DropdownPlacement {
 
-    autoStart = 'auto-start',
-    autoEnd = 'auto-end',
-    auto = 'auto',    
-    topStart = 'top-start',
-    topEnd = 'top-end',
-    top = 'top',
-    rightStart = 'right-start',
-    rightEnd = 'right-end',
-    right = 'right',
-    bottomStart = 'bottom-start',
-    bottomEnd = 'bottom-end',
-    bottom = 'bottom',
-    leftStart = 'left-start',
-    leftEnd = 'left-end',
-    left = 'left',
+    AutoStart = 'auto-start',
+    AutoEnd = 'auto-end',
+    Auto = 'auto',    
+    TopStart = 'top-start',
+    TopEnd = 'top-end',
+    Top = 'top',
+    RightStart = 'right-start',
+    RightEnd = 'right-end',
+    Right = 'right',
+    BottomStart = 'bottom-start',
+    BottomEnd = 'bottom-end',
+    Bottom = 'bottom',
+    LeftStart = 'left-start',
+    LeftEnd = 'left-end',
+    Left = 'left',
 }

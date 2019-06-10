@@ -166,7 +166,7 @@ $yiq-text-light:            $white !default;
 
 $enable-caret:                                true !default;
 $enable-rounded:                              true !default;
-$enable-shadows:                              false !default;
+$enable-shadows:                              true !default;
 $enable-gradients:                            false !default;
 $enable-transitions:                          true !default;
 $enable-prefers-reduced-motion-media-query:   true !default;
@@ -290,9 +290,9 @@ $line-height-sm:              1.5 !default;
 $border-width:                1px !default;
 $border-color:                $gray-300 !default;
 
-$border-radius:               .1875rem !default; // .25rem !default;
-$border-radius-lg:            .1875rem !default; // .3rem !default;
-$border-radius-sm:            .1875rem !default; // .2rem !default;
+$border-radius:               .125rem !default; // .25rem !default;
+$border-radius-lg:            .125rem !default; // .3rem !default;
+$border-radius-sm:            .125rem !default; // .2rem !default;
 
 $rounded-pill:                50rem !default;
 
@@ -854,7 +854,7 @@ $dropdown-border-width:             $border-width !default;
 $dropdown-inner-border-radius:      calc(#{$dropdown-border-radius} - #{$dropdown-border-width}) !default;
 $dropdown-divider-bg:               $gray-200 !default;
 $dropdown-divider-margin-y:         $nav-divider-margin-y !default;
-$dropdown-box-shadow:               0 .5rem 1rem rgba($black, .175) !default;
+$dropdown-box-shadow:               0 1px 2px 0 rgba(60,64,67,.3), 0 2px 6px 2px rgba(60,64,67,.15) !default;
 
 $dropdown-link-color:               $gray-900 !default;
 $dropdown-link-hover-color:         darken($gray-900, 5%) !default;
