@@ -1,7 +1,7 @@
 import { Component, createNode, IAttributes } from '@alumis/observables-dom';
 import Popper from 'popper.js';
 import { CancellationToken } from '@alumis/cancellationtoken';
-import { observe, KeyCodes } from '@alumis/utils';
+import { observe, KeyCode } from '@alumis/utils';
 import { IButtonAttributes } from '../Button/Button';
 import { globalAttrHandlers, generateHTMLElementId } from '@alumis/observables-dom';
 import { OperationCancelledError } from '@alumis/cancellationtoken';
@@ -135,14 +135,14 @@ export class Dropdown extends Component<HTMLDivElement> {
 
         if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
 
-            if (keyCode == KeyCodes.Space || (keyCode !== KeyCodes.Escape && keyCode !== KeyCodes.ArowUp && keyCode !== KeyCodes.ArrowDown)) {
+            if (keyCode == KeyCode.Space || (keyCode !== KeyCode.Escape && keyCode !== KeyCode.ArowUp && keyCode !== KeyCode.ArrowDown)) {
                 return;
             }
         }
 
-        if (keyCode === KeyCodes.Escape || keyCode === KeyCodes.Space) {
+        if (keyCode === KeyCode.Escape || keyCode === KeyCode.Space) {
 
-            if (keyCode === KeyCodes.Escape) {
+            if (keyCode === KeyCode.Escape) {
                 this.toggleElement.focus();
             }
 
@@ -157,11 +157,11 @@ export class Dropdown extends Component<HTMLDivElement> {
 
         let index = items.indexOf(target);
 
-        if (keyCode === KeyCodes.ArowUp && index > 0) {
+        if (keyCode === KeyCode.ArowUp && index > 0) {
             index--;
         }
 
-        if (keyCode === KeyCodes.ArrowDown && index < items.length - 1) {
+        if (keyCode === KeyCode.ArrowDown && index < items.length - 1) {
             index++;
         }
 
