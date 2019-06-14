@@ -128,7 +128,7 @@ export class Dropdown extends Component<HTMLDivElement> {
         document.removeEventListener('keydown', this.documentKeydownEventHandler);
     }
     
-    private documentKeydownEventHandler(event: KeyboardEvent) {
+    private documentKeydownEventHandler(event: KeyboardEvent) {        
 
         const target = event.target as HTMLElement;
         const keyCode = event.keyCode;
@@ -151,23 +151,19 @@ export class Dropdown extends Component<HTMLDivElement> {
 
         const items = Array.from(this.node.querySelectorAll(`.${Dropdown.styles['dropdown-item']}`)) as HTMLElement[];
 
-        if (!items.length) {
+        if (!items.length)
             return;
-        }
-
+        
         let index = items.indexOf(target);
 
-        if (keyCode === KeyCode.ArowUp && index > 0) {
+        if (keyCode === KeyCode.ArowUp && index > 0) 
             index--;
-        }
 
-        if (keyCode === KeyCode.ArrowDown && index < items.length - 1) {
+        if (keyCode === KeyCode.ArrowDown && index < items.length - 1)
             index++;
-        }
 
-        if (index < 0) {
+        if (index < 0) 
             index = 0;
-        }
 
         items[index].focus();
     }
@@ -182,6 +178,7 @@ export class DropdownItem extends Component<HTMLDivElement> {
         super();
 
         this.node = createNode('li', attrs, children);
+        this.node.setAttribute('tabIndex','-1');
         this.node.classList.add(Dropdown.styles["dropdown-item"]);
     }
 }
