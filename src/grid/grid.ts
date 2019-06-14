@@ -1,5 +1,5 @@
 import { globalAttrHandlers } from "@alumis/observables-dom";
-import * as cssClasses from "./_grid.scss";
+import styles from "./_grid.scss";
 import { DeviceWidth } from "../DeviceWidth";
 
 declare module '@alumis/observables-dom' {
@@ -15,10 +15,10 @@ declare module '@alumis/observables-dom' {
 globalAttrHandlers.set("container", (element: HTMLElement, attr: ContainerWidth | boolean) => {
 
     if (attr === ContainerWidth.Responsive || attr === true)
-        element.classList.add((<any>cssClasses).container);
+        element.classList.add(styles.container);
     
     else if (attr === ContainerWidth.Fluid)
-        element.classList.add((<any>cssClasses)["container-fluid"]);
+        element.classList.add(styles["container-fluid"]);
 });
 
 export enum ContainerWidth {
@@ -29,18 +29,18 @@ export enum ContainerWidth {
 
 globalAttrHandlers.set("row", (element: HTMLElement) => {
 
-    element.classList.add((<any>cssClasses).row);
+    element.classList.add(styles.row);
 });
 
 globalAttrHandlers.set("columns", (element: HTMLElement, attr: number | { breakpoint: DeviceWidth; span: number; }[]) => {
 
     if (typeof attr === "number")
-        element.classList.add((<any>cssClasses)["col-" + attr]);
+        element.classList.add(styles["col-" + attr]);
     
     else {
         
         for (let r of <{ breakpoint: DeviceWidth; span: number; }[]>attr)
-            element.classList.add((<any>cssClasses)[r.breakpoint === DeviceWidth.ExtraSmall ? "col-" + r.span : `col-${getDeviceWidthPrefix(r.breakpoint)}-${r.span}`]);
+            element.classList.add(styles[r.breakpoint === DeviceWidth.ExtraSmall ? "col-" + r.span : `col-${getDeviceWidthPrefix(r.breakpoint)}-${r.span}`]);
     }
 });
 

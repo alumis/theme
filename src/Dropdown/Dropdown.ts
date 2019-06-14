@@ -6,7 +6,6 @@ import { IButtonAttributes } from '../Button/Button';
 import { globalAttrHandlers, generateHTMLElementId } from '@alumis/observables-dom';
 import { OperationCancelledError } from '@alumis/cancellationtoken';
 import { transitionAsync, easeIn, IDOMAnimator } from '@alumis/transitionasync';
-import * as cssClasses from "./_dropdown.scss";
 
 export class Dropdown extends Component<HTMLDivElement> {
 
@@ -28,11 +27,12 @@ export class Dropdown extends Component<HTMLDivElement> {
             delete attrs.placement;
         }
 
+
         this.node = createNode('div', attrs, createNode("ul", null, children));
         this.unorderedListElement.addEventListener('click', e => e.stopPropagation());
-        this.node.classList.add(cssClasses["dropdown-menu"]);
+        this.node.classList.add(Dropdown.styles["dropdown-menu"]);
 
-        this.placement = placement || DropdownPlacement.bottomStart;
+        this.placement = placement || DropdownPlacement.BottomStart;
         this.animator = animator;
     }
 
@@ -149,7 +149,7 @@ export class Dropdown extends Component<HTMLDivElement> {
             this.hideAsync();
         }
 
-        const items = Array.from(this.node.querySelectorAll(`.${cssClasses['dropdown-item']}`)) as HTMLElement[];
+        const items = Array.from(this.node.querySelectorAll(`.${Dropdown.styles['dropdown-item']}`)) as HTMLElement[];
 
         if (!items.length) {
             return;
@@ -171,6 +171,8 @@ export class Dropdown extends Component<HTMLDivElement> {
 
         items[index].focus();
     }
+
+    static styles: IDropdownStyles;
 }
 
 export class DropdownItem extends Component<HTMLDivElement> {
@@ -180,7 +182,7 @@ export class DropdownItem extends Component<HTMLDivElement> {
         super();
 
         this.node = createNode('li', attrs, children);
-        this.node.classList.add(cssClasses["dropdown-item"]);
+        this.node.classList.add(Dropdown.styles["dropdown-item"]);
     }
 }
 
@@ -257,7 +259,7 @@ export function bindDropdown(toggleElement: HTMLElement, dropdownMenu: Dropdown,
 
     if (!isClickedOutsideEventHandlerAttached) {
 
-        document.body.addEventListener('click', clickedOutsideEventHandler);
+        document.addEventListener('click', clickedOutsideEventHandler);
         isClickedOutsideEventHandlerAttached = true;
     }
 
@@ -341,26 +343,27 @@ export interface IDropdownAttributes extends IAttributes {
     animator?: IDropdownAnimator;
 }
 
-export interface IDropdownCssClasses {
-
-    'dropdown-menu': string;
-}
-
 export enum DropdownPlacement {
 
-    autoStart = 'auto-start',
-    autoEnd = 'auto-end',
-    auto = 'auto',    
-    topStart = 'top-start',
-    topEnd = 'top-end',
-    top = 'top',
-    rightStart = 'right-start',
-    rightEnd = 'right-end',
-    right = 'right',
-    bottomStart = 'bottom-start',
-    bottomEnd = 'bottom-end',
-    bottom = 'bottom',
-    leftStart = 'left-start',
-    leftEnd = 'left-end',
-    left = 'left',
+    AutoStart = 'auto-start',
+    AutoEnd = 'auto-end',
+    Auto = 'auto',    
+    TopStart = 'top-start',
+    TopEnd = 'top-end',
+    Top = 'top',
+    RightStart = 'right-start',
+    RightEnd = 'right-end',
+    Right = 'right',
+    BottomStart = 'bottom-start',
+    BottomEnd = 'bottom-end',
+    Bottom = 'bottom',
+    LeftStart = 'left-start',
+    LeftEnd = 'left-end',
+    Left = 'left',
+}
+
+export interface IDropdownStyles {
+
+    'dropdown-menu': string;
+    "dropdown-item": string;
 }

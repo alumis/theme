@@ -1,7 +1,6 @@
 import { Observable, ComputedObservable, ObservableArray } from "@alumis/observables";
 import { Component, IAttributes, createNode, appendDispose, globalAttrHandlers, bindAttribute } from "@alumis/observables-dom";
 import { r } from "@alumis/observables-i18n";
-import * as cssClasses from "./_alert.scss";
 
 export class Alert extends Component<HTMLDivElement> {
 
@@ -62,7 +61,7 @@ export class Alert extends Component<HTMLDivElement> {
 
         (this.node = <HTMLDivElement>createNode("div", attrs, children)).setAttribute("role", "alert");
 
-        this.node.classList.add((cssClasses as any as IAlertCssClasses).alert);
+        this.node.classList.add(Alert.styles.alert);
 
         if (theme instanceof Observable) {
 
@@ -95,11 +94,11 @@ export class Alert extends Component<HTMLDivElement> {
             /// <i18n key="Close" lang="en">Close</i18n>
             /// <i18n key="Close" lang="no">Lukk</i18n>
 
-            this.node.classList.add((cssClasses as any as IAlertCssClasses)["alert-dismissible"]);
+            this.node.classList.add(Alert.styles["alert-dismissible"]);
 
             let closeButtonElement = document.createElement("button");
 
-            closeButtonElement.classList.add((cssClasses as any as IAlertCssClasses).close);
+            closeButtonElement.classList.add(Alert.styles.close);
 
             bindAttribute(closeButtonElement, "aria-label", r("Close"));
 
@@ -150,54 +149,39 @@ export class Alert extends Component<HTMLDivElement> {
 
     private static getColorClass(color: AlertTheme) {
 
-    switch (color) {
+        switch (color) {
 
-        case AlertTheme.Primary:
-            return (cssClasses as any as IAlertCssClasses)["alert-primary"];
-        case AlertTheme.Secondary:
-            return (cssClasses as any as IAlertCssClasses)["alert-secondary"];
-        case AlertTheme.Success:
-            return (cssClasses as any as IAlertCssClasses)["alert-success"];
-        case AlertTheme.Warning:
-            return (cssClasses as any as IAlertCssClasses)["alert-warning"];
-        case AlertTheme.Danger:
-            return (cssClasses as any as IAlertCssClasses)["alert-danger"];
-        case AlertTheme.Info:
-            return (cssClasses as any as IAlertCssClasses)["alert-info"];
-        case AlertTheme.Light:
-            return (cssClasses as any as IAlertCssClasses)["alert-light"];
-        case AlertTheme.Dark:
-            return (cssClasses as any as IAlertCssClasses)["alert-dark"];
+            case AlertTheme.Primary:
+                return Alert.styles["alert-primary"];
+            case AlertTheme.Secondary:
+                return Alert.styles["alert-secondary"];
+            case AlertTheme.Success:
+                return Alert.styles["alert-success"];
+            case AlertTheme.Warning:
+                return Alert.styles["alert-warning"];
+            case AlertTheme.Danger:
+                return Alert.styles["alert-danger"];
+            case AlertTheme.Info:
+                return Alert.styles["alert-info"];
+            case AlertTheme.Light:
+                return Alert.styles["alert-light"];
+            case AlertTheme.Dark:
+                return Alert.styles["alert-dark"];
+        }
     }
-}
 
-colorAction = (newColor: AlertTheme, oldColor: AlertTheme) => {
+    colorAction = (newColor: AlertTheme, oldColor: AlertTheme) => {
 
-    let cls = Alert.getColorClass(newColor);
+        let cls = Alert.getColorClass(newColor);
 
-    if (cls)
-        this.node.classList.add(cls);
+        if (cls)
+            this.node.classList.add(cls);
 
-    if (cls = Alert.getColorClass(oldColor))
-        this.node.classList.remove(cls);
-};
-}
+        if (cls = Alert.getColorClass(oldColor))
+            this.node.classList.remove(cls);
+    };
 
-export interface IAlertCssClasses {
-
-    "alert": string;
-    "alert-primary": string;
-    "alert-secondary": string;
-    "alert-success": string;
-    "alert-warning": string;
-    "alert-danger": string;
-    "alert-info": string;
-    "alert-light": string;
-    "alert-dark": string;
-    "alert-heading": string;
-    "alert-dismissible": string;
-
-    "close": string;
+    static styles: IAlertStyles;
 }
 
 export interface IAlertAttributes extends IAttributes {
@@ -232,7 +216,7 @@ declare module '@alumis/observables-dom' {
 
 globalAttrHandlers.set("alert-heading", (element: HTMLElement) => {
 
-    element.classList.add((cssClasses as any as IAlertCssClasses)["alert-heading"]);
+    element.classList.add(Alert.styles["alert-heading"]);
 });
 
 export class AlertManager extends Component<HTMLUListElement> {
@@ -267,4 +251,21 @@ export class AlertManager extends Component<HTMLUListElement> {
 export interface IAlertManagerAttributes extends IAttributes {
 
     alerts?: ObservableArray<Alert>;
+}
+
+export interface IAlertStyles {
+
+    "alert": string;
+    "alert-primary": string;
+    "alert-secondary": string;
+    "alert-success": string;
+    "alert-warning": string;
+    "alert-danger": string;
+    "alert-info": string;
+    "alert-light": string;
+    "alert-dark": string;
+    "alert-heading": string;
+    "alert-dismissible": string;
+
+    "close": string;
 }

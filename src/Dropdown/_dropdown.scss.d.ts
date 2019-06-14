@@ -1,2 +1,5 @@
-declare const cssClasses;
-export default cssClasses;
+import { IDropdownStyles } from "./Dropdown";
+
+declare const styles: IDropdownStyles;
+
+export default styles;
