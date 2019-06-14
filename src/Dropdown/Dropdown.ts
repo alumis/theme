@@ -1,7 +1,7 @@
 import { Component, createNode, IAttributes } from '@alumis/observables-dom';
 import Popper from 'popper.js';
 import { CancellationToken } from '@alumis/cancellationtoken';
-import { observe } from '@alumis/utils';
+import { observe, KeyCodes } from '@alumis/utils';
 import { IButtonAttributes } from '../Button/Button';
 import { globalAttrHandlers, generateHTMLElementId } from '@alumis/observables-dom';
 import { OperationCancelledError } from '@alumis/cancellationtoken';
@@ -14,7 +14,7 @@ export class Dropdown extends Component<HTMLDivElement> {
 
         super();
 
-        this.clickEventHandler = this.clickEventHandler.bind(this);
+        this.documentKeydownEventHandler = this.documentKeydownEventHandler.bind(this);
         
         let animator: IDropdownAnimator;
         let placement: DropdownPlacement;        
@@ -28,8 +28,8 @@ export class Dropdown extends Component<HTMLDivElement> {
             delete attrs.placement;
         }
 
-        this.node = createNode('div', attrs, children);
-        this.node.addEventListener('click', this.clickEventHandler);
+        this.node = createNode('div', attrs, createNode("ul", null, children));
+        this.unorderedListElement.addEventListener('click', e => e.stopPropagation());
         this.node.classList.add(cssClasses["dropdown-menu"]);
 
         this.placement = placement || DropdownPlacement.bottomStart;
@@ -38,6 +38,11 @@ export class Dropdown extends Component<HTMLDivElement> {
 
     placement: DropdownPlacement;
     animator: IDropdownAnimator;
+
+    get unorderedListElement() {
+
+        return this.node.querySelector('ul');
+    }
 
     get toggleElement() {
 
@@ -53,10 +58,10 @@ export class Dropdown extends Component<HTMLDivElement> {
 
     get isVisible() { return this._isVisible };
     
-    private _toggleElement: HTMLElement;
-    private _isVisible: boolean;
     private _cancellationToken: CancellationToken;
+    private _isVisible: boolean;
     private _popper: Popper;
+    private _toggleElement: HTMLElement;
 
     async showAsync() {
 
@@ -92,6 +97,8 @@ export class Dropdown extends Component<HTMLDivElement> {
 
             delete this._cancellationToken;
         }
+
+        document.addEventListener('keydown', this.documentKeydownEventHandler);
     }
 
     async hideAsync() {
@@ -106,9 +113,6 @@ export class Dropdown extends Component<HTMLDivElement> {
             this.node.remove();
 
         } else {
-
-            if (!this.node.parentElement)
-                return;
             
             if (this._cancellationToken) 
                 this._cancellationToken.cancel();
@@ -120,13 +124,52 @@ export class Dropdown extends Component<HTMLDivElement> {
 
             delete this._cancellationToken;
         }
+
+        document.removeEventListener('keydown', this.documentKeydownEventHandler);
     }
+    
+    private documentKeydownEventHandler(event: KeyboardEvent) {
 
-    private clickEventHandler(event: Event) {
+        const target = event.target as HTMLElement;
+        const keyCode = event.keyCode;
 
-        if (event.target === this.node) {
-            event.stopPropagation();
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+
+            if (keyCode == KeyCodes.Space || (keyCode !== KeyCodes.Escape && keyCode !== KeyCodes.ArowUp && keyCode !== KeyCodes.ArrowDown)) {
+                return;
+            }
         }
+
+        if (keyCode === KeyCodes.Escape || keyCode === KeyCodes.Space) {
+
+            if (keyCode === KeyCodes.Escape) {
+                this.toggleElement.focus();
+            }
+
+            this.hideAsync();
+        }
+
+        const items = Array.from(this.node.querySelectorAll(`.${cssClasses['dropdown-item']}`)) as HTMLElement[];
+
+        if (!items.length) {
+            return;
+        }
+
+        let index = items.indexOf(target);
+
+        if (keyCode === KeyCodes.ArowUp && index > 0) {
+            index--;
+        }
+
+        if (keyCode === KeyCodes.ArrowDown && index < items.length - 1) {
+            index++;
+        }
+
+        if (index < 0) {
+            index = 0;
+        }
+
+        items[index].focus();
     }
 }
 
@@ -136,7 +179,7 @@ export class DropdownItem extends Component<HTMLDivElement> {
 
         super();
 
-        this.node = createNode('div', attrs, children);
+        this.node = createNode('li', attrs, children);
         this.node.classList.add(cssClasses["dropdown-item"]);
     }
 }
