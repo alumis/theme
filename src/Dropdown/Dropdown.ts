@@ -256,21 +256,21 @@ export function bindDropdown(toggleElement: HTMLElement, dropdownMenu: Dropdown,
 
     if (!isClickedOutsideEventHandlerAttached) {
 
-        document.addEventListener('click', clickedOutsideEventHandler);
+        document.addEventListener('click', hideDropdowns);
         isClickedOutsideEventHandlerAttached = true;
     }
 
-    dropdownsToCloseOnClickOutsideSet.add(dropdownMenu);    
+    dropdowns.add(dropdownMenu);    
 
     dropdownMenu.toggleElement = toggleElement;
 }
 
 var isClickedOutsideEventHandlerAttached = false;
-var dropdownsToCloseOnClickOutsideSet = new Set<Dropdown>();
+var dropdowns = new Set<Dropdown>();
 
-function clickedOutsideEventHandler(event: Event) {
+function hideDropdowns() {
 
-    for (let dropdown of dropdownsToCloseOnClickOutsideSet) {
+    for (let dropdown of dropdowns) {
 
         if (dropdown.isVisible) {
 
@@ -284,25 +284,12 @@ async function togglerClickEventHandler(event: Event) {
 
     event.stopPropagation();
 
+    hideDropdowns();
+
     const dropdownMenu = <Dropdown>this;
     const toggleElement = dropdownMenu.toggleElement;
 
-    if (dropdownMenu.isVisible) {
-
-        try {
-            await dropdownMenu.hideAsync();
-        }
-        catch(error) {
-
-            if (error instanceof OperationCancelledError) 
-                return;
-
-            throw error;
-        }
-        
-        toggleElement.setAttribute('aria-expanded', 'false');
-
-    } else {
+    if (!dropdownMenu.isVisible) {
 
         try {
             await dropdownMenu.showAsync();
