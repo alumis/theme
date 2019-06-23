@@ -1,7 +1,7 @@
 import { Component, createNode, IAttributes } from '@alumis/observables-dom';
 import Popper from 'popper.js';
 import { CancellationToken } from '@alumis/cancellationtoken';
-import { observe, KeyCode } from '@alumis/utils';
+import { observe, KeyCode, delayAsync } from '@alumis/utils';
 import { IButtonAttributes } from '../Button/Button';
 import { globalAttrHandlers, generateHTMLElementId } from '@alumis/observables-dom';
 import { OperationCancelledError } from '@alumis/cancellationtoken';
@@ -284,26 +284,31 @@ async function togglerClickEventHandler(event: Event) {
 
     event.stopPropagation();
 
-    hideDropdowns();
-
     const dropdownMenu = <Dropdown>this;
     const toggleElement = dropdownMenu.toggleElement;
 
-    if (!dropdownMenu.isVisible) {
+    (async () => {
 
-        try {
-            await dropdownMenu.showAsync();
+        await delayAsync(0);
+
+        if (!dropdownMenu.isVisible) {
+
+            try {
+                await dropdownMenu.showAsync();
+            }
+            catch(error) {
+    
+                if (error instanceof OperationCancelledError)
+                    return;
+    
+                throw error; 
+            }
+    
+            toggleElement.setAttribute('aria-expanded', 'true');
         }
-        catch(error) {
+    })();
 
-            if (error instanceof OperationCancelledError)
-                return;
-
-            throw error; 
-        }
-
-        toggleElement.setAttribute('aria-expanded', 'true');
-    }
+    hideDropdowns();
 }
 
 globalAttrHandlers.set('dropdown', bindDropdown);
