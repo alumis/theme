@@ -1,9 +1,9 @@
-import { Observable, ComputedObservable } from "@alumis/observables";
-import { Component, IAttributes, createNode, appendDispose } from "@alumis/observables-dom";
+import { Observable, ComputedObservable, isObservable, co, o } from "@alumis/observables";
+import { Component, Attributes, createNode, appendCleanCallback } from "@alumis/observables/src/JSX";
 
 export class Button extends Component<HTMLButtonElement> {
 
-    constructor(attrs: IButtonAttributes, children: any[]) {
+    constructor(attrs: ButtonAttributes, children: any[]) {
 
         super();
 
@@ -27,37 +27,28 @@ export class Button extends Component<HTMLButtonElement> {
 
         this.node.classList.add(Button.styles.btn);
 
-        if (theme instanceof Observable) {
-
-            appendDispose(this.node, theme.subscribeInvoke(this.colorAction).dispose);
-            this.themeAsObservable = theme;
+        if (isObservable(theme)) {
+            appendCleanCallback(this.node, (<Observable<any>>theme).subscribeInvoke(this.colorAction).unsubscribeAndRecycle);
+            this.themeAsObservable = <Observable<any>>theme;
         }
 
         else if (typeof theme === "function") {
-
-            let computedObservable = ComputedObservable.createComputed(theme);
-
+            let computedObservable = co(theme);
             computedObservable.subscribeInvoke(this.colorAction);
-            appendDispose(this.node, computedObservable.dispose);
-
+            appendCleanCallback(this.node, computedObservable.dispose);
             this.themeAsObservable = computedObservable;
         }
 
         else {
-
-            let observable = Observable.create(theme);
-
+            let observable = <Observable<any>>o(theme);
             observable.subscribeInvoke(this.colorAction);
-            appendDispose(this.node, observable.dispose);
-
+            appendCleanCallback(this.node, observable.dispose);
             this.themeAsObservable = observable;
         }
 
         if (size) {
-
             if (size === ButtonSize.Small)
                 this.node.classList.add(Button.styles["btn-sm"]);
-
             else if (size === ButtonSize.Large)
                 this.node.classList.add(Button.styles["btn-lg"]);
         }
@@ -101,20 +92,17 @@ export class Button extends Component<HTMLButtonElement> {
     }
 
     colorAction = (newColor: ButtonTheme, oldColor: ButtonTheme) => {
-
         let cls = Button.getColorClass(newColor);
-
         if (cls)
             this.node.classList.add(cls);
-
         if (cls = Button.getColorClass(oldColor))
             this.node.classList.remove(cls);
     };
 
-    static styles: IButtonStyles;
+    static styles: ButtonStyles;
 }
 
-export interface IButtonStyles {
+export interface ButtonStyles {
 
     "btn": string;
     "btn-primary": string;
@@ -137,7 +125,7 @@ export interface IButtonStyles {
     "btn-lg": string;
 }
 
-export interface IButtonAttributes extends IAttributes {
+export interface ButtonAttributes extends Attributes {
 
     submits?: boolean;
     theme?: ButtonTheme | Observable<ButtonTheme> | (() => ButtonTheme);

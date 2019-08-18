@@ -155,7 +155,7 @@ export class TextInput extends Component<HTMLDivElement> {
     valueAsObservable: Observable<string>;
     invalidFeedback: Observable<string | Observable<string> | (() => string)>;
 
-    static styles: ITextInputStyles;
+    static styles: TextInputStyles;
 }
 
 export interface TextInputAttributes extends Attributes {
@@ -204,7 +204,7 @@ export enum TextInputType {
     Url = "url"
 }
 
-export interface ITextInputStyles {
+export interface TextInputStyles {
 
     "form-group": string;
     "form-control": string;
