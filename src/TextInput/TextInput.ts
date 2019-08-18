@@ -1,9 +1,9 @@
-import { Observable, ComputedObservable } from "@alumis/observables";
-import { createNode, Component, IAttributes, generateHTMLElementId, appendDispose, bindClass } from "@alumis/observables-dom";
+import { Observable, ModifiableObservable, co, ComputedObservable, o, isObservable } from "@alumis/observables";
+import { createNode, Component, Attributes, generateHTMLElementId, appendCleanCallback, bindClass } from "@alumis/observables/src/JSX";
 
 export class TextInput extends Component<HTMLDivElement> {
 
-    constructor(attrs: ITextInputAttributes) {
+    constructor(attrs: TextInputAttributes) {
 
         super();
 
@@ -16,7 +16,6 @@ export class TextInput extends Component<HTMLDivElement> {
         let multiline: boolean;
 
         if (attrs) {
-
             type = attrs.type;
             label = attrs.label;
             value = attrs.value;
@@ -36,36 +35,24 @@ export class TextInput extends Component<HTMLDivElement> {
 
         if (multiline)
             this.inputElement = createNode("textarea", attrs) as HTMLTextAreaElement;
-
         else {
-
             this.inputElement = createNode("input", attrs) as HTMLInputElement;
-
             switch (type) {
 
                 case TextInputType.CurrentPassword:
                 case TextInputType.NewPassword:
-
                     this.inputElement.type = "password";
                     break;
-
                 case TextInputType.Email:
-
                     this.inputElement.type = "email";
                     break;
-
                 case TextInputType.PhoneNumber:
-
                     this.inputElement.type = "tel";
                     break;
-
                 case TextInputType.Url:
-
                     this.inputElement.type = "url";
                     break;
-
                 default:
-
                     this.inputElement.type = "text";
                     break;
             }
@@ -74,44 +61,34 @@ export class TextInput extends Component<HTMLDivElement> {
         this.inputElement.classList.add(TextInput.styles["form-control"]);
 
         if (value instanceof ComputedObservable) {
-
-            appendDispose(this.inputElement, (this.valueAsObservable = value).subscribeInvoke(n => { this.inputElement.value = n !== null && n !== undefined ? n : ""; }).dispose);
+            appendCleanCallback(this.inputElement, (this.valueAsObservable = value).subscribeInvoke(n => { this.inputElement.value = n !== null && n !== undefined ? n : ""; }).unsubscribeAndRecycle);
             this.inputElement.readOnly = true;
         }
 
-        else if (value instanceof Observable) {
-
+        else if (value instanceof ModifiableObservable) {
             let observableSubscription = (this.valueAsObservable = value).subscribeInvoke(n => { this.inputElement.value = n !== null && n !== undefined ? n : ""; });
-
-            appendDispose(this.inputElement, observableSubscription.dispose);
-            this.inputElement.addEventListener("input", () => { this.valueAsObservable.setValueDontNotify(this.inputElement.value, observableSubscription); });
+            appendCleanCallback(this.inputElement, observableSubscription.unsubscribeAndRecycle);
+            this.inputElement.addEventListener("input", () => { (<ModifiableObservable<any>>this.valueAsObservable).setValueDontNotifyMe(this.inputElement.value, observableSubscription); });
         }
 
         else if (typeof value === "function") {
-
-            let computedObservable = ComputedObservable.createComputed(value);
-
+            let computedObservable = co(value);
             (this.valueAsObservable = computedObservable).subscribeInvoke(n => { this.inputElement.value = n !== null && n !== undefined ? n : ""; });
-            appendDispose(this.inputElement, computedObservable.dispose);
+            appendCleanCallback(this.inputElement, computedObservable.dispose);
             this.inputElement.readOnly = true;
         }
 
         else {
-
-            let observable = <Observable<string>>Observable.create(value);
+            let observable = <Observable<string>>o(value);
             let observableSubscription = (this.valueAsObservable = observable).subscribeInvoke(n => { this.inputElement.value = n !== null && n !== undefined ? n : ""; });
-
-            appendDispose(this.inputElement, observable.dispose);
-            this.inputElement.addEventListener("input", () => { this.valueAsObservable.setValueDontNotify(this.inputElement.value, observableSubscription); });
+            appendCleanCallback(this.inputElement, observable.dispose);
+            this.inputElement.addEventListener("input", () => { (<ModifiableObservable<any>>this.valueAsObservable).setValueDontNotifyMe(this.inputElement.value, observableSubscription); });
         }
 
         if (autocomplete !== false && type) {
-
             this.inputElement.autocomplete = type;
-
             if (!this.inputElement.id)
                 this.inputElement.id = generateHTMLElementId();
-
             if (!this.inputElement.name)
                 this.inputElement.name = type;
         }
@@ -119,7 +96,6 @@ export class TextInput extends Component<HTMLDivElement> {
         (this.node = document.createElement("div")).classList.add(TextInput.styles["form-group"]);
 
         if (label) {
-
             (this.labelElement = <HTMLLabelElement>createNode("label", null, label)).setAttribute("for", this.inputElement.id || (this.inputElement.id = generateHTMLElementId()));
             this.node.appendChild(this.labelElement);
         }
@@ -129,17 +105,14 @@ export class TextInput extends Component<HTMLDivElement> {
         let ariaDescribedBy: string;
 
         if (help) {
-
             (this.helpElement = <HTMLElement>createNode("small", null, help)).id = ariaDescribedBy = generateHTMLElementId();
-
             this.helpElement.classList.add(TextInput.styles["form-text"], TextInput.styles["text-muted"]);
             this.node.appendChild(this.helpElement);
         }
 
         if (invalidFeedback)
             this.invalidFeedback = invalidFeedback;
-
-        else appendDispose(this.inputElement, (this.invalidFeedback = Observable.create(null)).dispose);
+        else appendCleanCallback(this.inputElement, (this.invalidFeedback = o(null)).dispose);
 
         bindClass(this.inputElement, TextInput.styles["is-invalid"], () => !!this.invalidFeedback.value);
 
@@ -148,13 +121,13 @@ export class TextInput extends Component<HTMLDivElement> {
             let invalidFeedback = this.invalidFeedback.value;
             let result: string;
 
-            if (invalidFeedback instanceof Observable)
-                result = invalidFeedback.value;
+            if (isObservable(invalidFeedback))
+                result = (<Observable<any>>invalidFeedback).value;
 
             else if (typeof invalidFeedback === "function")
                 result = invalidFeedback();
 
-            else result = invalidFeedback;
+            else result = <any>invalidFeedback;
 
             return result !== null && result !== undefined ? String(result) : "";
         });
@@ -185,7 +158,7 @@ export class TextInput extends Component<HTMLDivElement> {
     static styles: ITextInputStyles;
 }
 
-export interface ITextInputAttributes extends IAttributes {
+export interface TextInputAttributes extends Attributes {
 
     type?: TextInputType;
 

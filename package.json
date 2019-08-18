@@ -1,8 +1,10 @@
 {
   "name": "@alumis/theme",
+  "version": "2.0.0",
   "description": "Fork of Bootstrap",
-  "version": "1.0.39",
-  "sass": "scss/alumis.scss",
+  "scripts": {
+    "bump": "git add -A & git commit -am 'bumped' && npm version patch && npm publish && git push --follow-tags"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alumis/theme.git"
@@ -12,24 +14,19 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@alumis/cancellationtoken": "^1.0.4",
-    "@alumis/observables": "^1.0.52",
-    "@alumis/observables-dom": "^1.0.74",
-    "@alumis/observables-i18n": "^1.0.17",
-    "@alumis/semaphore": "^1.0.1",
-    "@alumis/transitionasync": "^1.0.8",
-    "@alumis/utils": "^1.0.20",
-    "node-sass": "^4.11.0",
-    "popper.js": "^1.15.0"
+    "@alumis/observables": "^2.0.14",
+    "@alumis/observables-i18n": "^2.0.2",
+    "@alumis/utils": "^2.0.5",
+    "node-sass": "^4.12.0",
+    "popper.js": "^1.15.0",
+    "qrcode": "^1.4.1"
   },
   "peerDependencies": {
-    "@alumis/cancellationtoken": "^1.0.4",
-    "@alumis/observables": "^1.0.52",
-    "@alumis/observables-dom": "^1.0.74",
-    "@alumis/observables-i18n": "^1.0.17",
-    "@alumis/semaphore": "^1.0.1",
-    "@alumis/transitionasync": "^1.0.8",
-    "@alumis/utils": "^1.0.20",
-    "popper.js": "^1.15.0"
+    "@alumis/observables": "^2.0.14",
+    "@alumis/observables-i18n": "^2.0.2",
+    "@alumis/utils": "^2.0.5",
+    "node-sass": "^4.12.0",
+    "popper.js": "^1.15.0",
+    "qrcode": "^1.4.1"
   }
 }

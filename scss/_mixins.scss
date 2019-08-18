@@ -8,9 +8,8 @@
 // Deprecate
 @import "mixins/deprecate";
 
-// Utilities
+// Helpers
 @import "mixins/breakpoints";
-@import "mixins/hover";
 @import "mixins/image";
 @import "mixins/resize";
 @import "mixins/screen-reader";
@@ -18,10 +17,12 @@
 @import "mixins/text-emphasis";
 @import "mixins/text-truncate";
 
+// Utilities
+@import "mixins/utilities";
+
 // Components
 @import "mixins/alert";
 @import "mixins/buttons";
-@import "mixins/badge";
 @import "mixins/caret";
 @import "mixins/pagination";
 @import "mixins/lists";

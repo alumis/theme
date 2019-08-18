@@ -9,7 +9,7 @@
   border-color: $border;
   @include box-shadow($btn-box-shadow);
 
-  @include hover {
+  &:hover {
     color: color-yiq($hover-background);
     @include gradient-bg($hover-background);
     border-color: $hover-border;
@@ -42,7 +42,6 @@
 
   &:not(:disabled):not(.disabled):active,
   &:not(:disabled):not(.disabled).active,
-  &:not(:disabled):not(.disabled)[aria-pressed],
   .show > &.dropdown-toggle {
     color: color-yiq($active-background);
     background-color: $active-background;
@@ -66,7 +65,7 @@
   color: $color;
   border-color: $color;
 
-  @include hover {
+  &:hover {
     color: $color-hover;
     background-color: $active-background;
     border-color: $active-border;
