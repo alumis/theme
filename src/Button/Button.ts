@@ -1,4 +1,4 @@
-import { Observable, ComputedObservable, isObservable, co, o } from "@alumis/observables";
+import { Observable, isObservable, co, o } from "@alumis/observables";
 import { Component, Attributes, createNode, appendCleanCallback } from "@alumis/observables/src/JSX";
 
 export class Button extends Component<HTMLButtonElement> {

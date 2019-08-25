@@ -1,5 +1,5 @@
-import { INavbarStyles } from "./navbar";
+import { NavbarStyles as NavbarStyles } from "./navbar";
 
-declare const styles: INavbarStyles;
+declare const styles: NavbarStyles;
 
 export default styles;

@@ -1,15 +1,15 @@
-import { globalAttrHandlers, Component, IAttributes } from "@alumis/observables-dom";
+import { globalAttrHandlers } from "@alumis/observables";
 
-let navbarStyles: INavbarStyles;
+let navbarStyles: NavbarStyles;
 
-export function setStyles(styles: INavbarStyles) {
+export function setStyles(styles: NavbarStyles) {
 
     navbarStyles = styles;
 }
 
-declare module '@alumis/observables-dom' {
+declare module '@alumis/observables' {
 
-    interface IAttributes {
+    interface Attributes {
 
         navbar?: boolean;
         ["navbar-sticky"]?: boolean;
@@ -35,26 +35,6 @@ globalAttrHandlers.set("navbar-groups", (element: HTMLElement, attr: boolean) =>
         element.classList.add(navbarStyles["navbar-groups"]);
 });
 
-export class HamburgerButton extends Component<HTMLButtonElement> {
-
-    constructor(attrs: IAttributes) {
-
-        super();
-
-        (this.node = document.createElement("button")).classList.add(navbarStyles.hamburger);
-
-        let hamburgerBox = document.createElement("span");
-
-        hamburgerBox.classList.add(navbarStyles["hamburger-box"]);
-
-        let hamburgerInner = document.createElement("span");
-
-        hamburgerInner.classList.add(navbarStyles["hamburger-inner"]);
-        hamburgerBox.appendChild(hamburgerInner);
-        this.node.appendChild(hamburgerBox);
-    }
-}
-
 globalAttrHandlers.set("navbar-brand", (element: HTMLElement) => {
 
     element.classList.add(navbarStyles["navbar-brand"]);
@@ -65,14 +45,11 @@ globalAttrHandlers.set("navbar-brand-text", (element: HTMLElement) => {
     element.classList.add(navbarStyles["navbar-brand-text"]);
 });
 
-export interface INavbarStyles {
+export interface NavbarStyles {
 
     "navbar": string;
     "navbar-sticky": string;
     "navbar-groups": string;
     "navbar-brand": string;
     "navbar-brand-text": string;
-    "hamburger": string;
-    "hamburger-box": string;
-    "hamburger-inner": string;
 }
