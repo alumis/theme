@@ -1,9 +1,4 @@
-export interface GridStyles {
-
-    "container": string;
-    "container-fluid": string;
-    "row";
-}
+import { GridStyles } from "./grid";
 
 declare const styles: GridStyles;
 

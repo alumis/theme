@@ -1,4 +1,4 @@
-import { NavbarStyles as NavbarStyles } from "./navbar";
+import { NavbarStyles } from "./navbar";
 
 declare const styles: NavbarStyles;
 

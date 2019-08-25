@@ -1,6 +1,19 @@
 import { globalAttrHandlers } from "@alumis/observables";
-import styles from "./_grid.scss";
 import { DeviceWidth } from "../DeviceWidth";
+
+export interface GridStyles {
+
+    "container": string;
+    "container-fluid": string;
+    "row";
+}
+
+let styles: GridStyles;
+
+export function setStyles(styles: GridStyles) {
+
+    styles = styles;
+}
 
 declare module '@alumis/observables' {
 
