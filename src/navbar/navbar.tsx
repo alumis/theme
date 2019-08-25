@@ -6,11 +6,11 @@ export interface NavbarStyles {
     "navbar-brand": string;
 }
 
-let styles: NavbarStyles;
+let navbarStyles: NavbarStyles;
 
 export function setStyles(styles: NavbarStyles) {
 
-    styles = styles;
+    navbarStyles = styles;
 }
 
 declare module '@alumis/observables' {
@@ -24,10 +24,10 @@ declare module '@alumis/observables' {
 globalAttrHandlers.set("navbar", (element: HTMLElement, attr: boolean) => {
 
     if (attr)
-        element.classList.add(styles.navbar);
+        element.classList.add(navbarStyles.navbar);
 });
 
 globalAttrHandlers.set("navbar-brand", (element: HTMLElement) => {
 
-    element.classList.add(styles["navbar-brand"]);
+    element.classList.add(navbarStyles["navbar-brand"]);
 });

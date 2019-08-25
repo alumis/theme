@@ -8,11 +8,11 @@ export interface GridStyles {
     "row";
 }
 
-let styles: GridStyles;
+let gridStyles: GridStyles;
 
 export function setStyles(styles: GridStyles) {
 
-    styles = styles;
+    gridStyles = styles;
 }
 
 declare module '@alumis/observables' {
@@ -28,10 +28,10 @@ declare module '@alumis/observables' {
 globalAttrHandlers.set("container", (element: HTMLElement, attr: ContainerWidth | boolean) => {
 
     if (attr === ContainerWidth.Responsive || attr === true)
-        element.classList.add(styles.container);
+        element.classList.add(gridStyles.container);
     
     else if (attr === ContainerWidth.Fluid)
-        element.classList.add(styles["container-fluid"]);
+        element.classList.add(gridStyles["container-fluid"]);
 });
 
 export enum ContainerWidth {
@@ -42,18 +42,18 @@ export enum ContainerWidth {
 
 globalAttrHandlers.set("row", (element: HTMLElement) => {
 
-    element.classList.add(styles.row);
+    element.classList.add(gridStyles.row);
 });
 
 globalAttrHandlers.set("columns", (element: HTMLElement, attr: number | { breakpoint: DeviceWidth; span: number; }[]) => {
 
     if (typeof attr === "number")
-        element.classList.add(styles["col-" + attr]);
+        element.classList.add(gridStyles["col-" + attr]);
     
     else {
         
         for (let r of <{ breakpoint: DeviceWidth; span: number; }[]>attr)
-            element.classList.add(styles[r.breakpoint === DeviceWidth.ExtraSmall ? "col-" + r.span : `col-${getDeviceWidthPrefix(r.breakpoint)}-${r.span}`]);
+            element.classList.add(gridStyles[r.breakpoint === DeviceWidth.ExtraSmall ? "col-" + r.span : `col-${getDeviceWidthPrefix(r.breakpoint)}-${r.span}`]);
     }
 });
 
