@@ -1,10 +1,10 @@
-import { globalAttrHandlers } from "@alumis/observables-dom";
+import { globalAttrHandlers } from "@alumis/observables";
 import styles from "./_grid.scss";
 import { DeviceWidth } from "../DeviceWidth";
 
-declare module '@alumis/observables-dom' {
+declare module '@alumis/observables' {
 
-    interface IAttributes {
+    interface Attributes {
 
         container?: ContainerWidth | boolean;
         row?: boolean;

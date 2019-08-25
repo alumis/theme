@@ -1,10 +1,10 @@
-export interface IGridStyles {
+export interface GridStyles {
 
     "container": string;
     "container-fluid": string;
     "row";
 }
 
-declare const styles: IGridStyles;
+declare const styles: GridStyles;
 
 export default styles;
