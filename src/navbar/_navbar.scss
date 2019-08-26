@@ -1,2 +1,56 @@
-@import "../bootstrap";
-@import "../../scss/navbar";
+// Navbar
+
+$navbar-padding-y: $spacer / 2 !default;
+$navbar-padding-x: $spacer !default;
+
+$navbar-brand-font-size: $font-size-lg !default;
+
+$navbar-link-padding-y:                .5rem !default;
+$navbar-link-padding-x:                1rem !default;
+
+.navbar {
+
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: $navbar-padding-y;
+    padding-top: $navbar-padding-y;
+}
+
+.navbar-brand {
+    display: inline-block;
+    margin-right: $navbar-padding-x;
+    @include font-size($navbar-brand-font-size);
+    white-space: nowrap;
+}
+
+.navbar-sticky {
+
+    position: sticky;
+    top: 0;
+}
+
+.navbar-groups {
+
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-group {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.navbar-link {
+    display: block;
+    padding: $navbar-link-padding-y $navbar-link-padding-x;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
