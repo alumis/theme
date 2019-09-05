@@ -1,5 +1,5 @@
-import { ITextInputStyles } from "./TextInput";
+import { TextInputStyles } from "./TextInput";
 
-declare const styles: ITextInputStyles;
+declare const styles: TextInputStyles;
 
 export default styles;

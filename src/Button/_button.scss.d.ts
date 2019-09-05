@@ -1,5 +1,5 @@
-import { IButtonStyles } from "./Button";
+import { ButtonStyles } from "./Button";
 
-declare const styles: IButtonStyles;
+declare const styles: ButtonStyles;
 
 export default styles;
